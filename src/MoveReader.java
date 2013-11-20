@@ -57,15 +57,13 @@ public class MoveReader
 	
 	private static CommandType returnCommandType(String commandString)
 	{
-		CommandType type = null;
-		for(StringPattern sp : stringPatterns)
+		CommandType type = CommandType.INVALID;
+		for(int i = 0; i < stringPatterns.length && type == CommandType.INVALID; i++)
 		{
-			if(Pattern.matches(sp.getString(), commandString))
+			if(Pattern.matches(stringPatterns[i].getString(), commandString))
 			{
-				return sp.getCommandType();
+				return stringPatterns[i].getCommandType();
 			}
-			else
-				type = CommandType.INVALID;
 		}
 		return type;
 	}
@@ -75,15 +73,12 @@ public class MoveReader
 		Matcher m = null;
 		String symbol1 = null;
 		String symbol2 = null;
-		
-		boolean isInterpreted = false;
 		for(StringPattern sp : stringPatterns)
 		{
 			if(sp.getCommandType() == returnCommandType(commandString))
 			{
 				m = sp.getMatcher(commandString);
 				m.find();
-				
 			}
 		}
 		
