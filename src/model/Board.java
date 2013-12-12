@@ -1,4 +1,5 @@
-import java.util.HashMap;
+package model;
+
 
 
 public class Board 
@@ -9,18 +10,31 @@ public class Board
 	
 	public Board()
 	{	
+		int l = 8;
 		for(int i = 0; i < BOARD_LENGTH; i++)
 		{
+			
 			for(int u = 0; u < BOARD_LENGTH; u++)
 			{
-				board[i][u] = new Square();
+				board[i][u] = new Square(letters[u] + "" + l);
+
 			}
+			l--;
 		}
-		
 		
 	}
 	
-	public void displayBoard()
+	public int getBoardLength()
+	{
+		return this.BOARD_LENGTH;
+	}
+	
+	public Square[] returnBoardRow(int row)
+	{
+		return board[row];
+	}
+	
+	public void display()
 	{
 		
 		//for each square in board, display the displaysymbol
@@ -37,18 +51,35 @@ public class Board
 		}
 	}
 	
-	//convert A1 into [0,0]
-		//A2 = [0,1]
-		
 	public Square returnSquare(String squareID)
 	{
+		
+		Square square = null;
+		for(int i = 0; i < BOARD_LENGTH; i++)
+		{
+			for(Square s : board[i])
+			{
+				if(s.getSquareID().equals(squareID))
+				{
+					square = s;
+				}
+			}
+		}
+		
+		
+		return square;
+		
+		/*
 		int letter = squareID.charAt(0) - 'A';
 		int num = '8'-squareID.charAt(1);
-		return board[num][letter];
+		return board[num][letter];	
+		*/
 		
 	}
 	
-	
-	
-
+	public Square returnSquareAt(int rowNum, int columnNum)
+	{
+		//System.out.println(board[columnNum][rowNum].getSquareID());
+		return board[rowNum][columnNum];
+	}
 }
